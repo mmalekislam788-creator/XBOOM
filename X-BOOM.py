@@ -34,7 +34,7 @@ def send_sms(target, count):
         except:
             print(f"[-] Network Error at SMS {i+1}")
         
-        time.sleep(😎 # একটু বেশি গ্যাপ দিলে ব্লক হওয়ার ভয় থাকে না
+        time.sleep(8 # একটু বেশি গ্যাপ দিলে ব্লক হওয়ার ভয় থাকে না
 
 def main():
     banner()
